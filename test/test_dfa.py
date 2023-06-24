@@ -1,9 +1,9 @@
+import sys
+sys.path.append("../automata")
+
 import unittest
 from automata import DFA, AutomatonArgs
-import sys
-sys.path.append('..')
-
-
+from automata.regex import *
 class TestDFA(unittest.TestCase):
     # DFA accepting string: string.count("1") % 3 == 0
     transitions = {"q0": {"0": "q0", "1": "q1"},
@@ -13,10 +13,6 @@ class TestDFA(unittest.TestCase):
     accept = {"q0"}
     dfa3args = AutomatonArgs(transitions, start, accept)
     dfa3 = DFA(transitions, start, accept)
-    transitions = {"q0": {"0": {"q0"}, "1": {"q1"}},
-                     "q1": {"0": {"q1"}, "1": {"q2"}},
-                        "q2": {"0": {"q2"}, "1": {"q0"}}}
-    dfa3_set = DFA(transitions, start, accept)
     # DFA accepting string: int(string, base=2) % 3 != 0
     transitions = {"modulo0": {"0": "modulo0", "1": "modulo1"},
                    "modulo1": {"0": "modulo-1", "1": "modulo0"},
@@ -55,6 +51,8 @@ class TestDFA(unittest.TestCase):
                 case), int(case, base=2) % 3 != 0)
             self.assertEqual(self.shrinked_dfa_mod3.accept(
                 case), int(case, base=2) % 3 != 0)
+        
+        
         testcase = ""
 
         # epsilon will return the first state
